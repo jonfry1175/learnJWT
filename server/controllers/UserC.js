@@ -1,7 +1,7 @@
-class userController {
+class UserController {
     static async getUser(req, res) {
-        res.send("userpage")
+        res.send("user controller")
     }
 }
 
-module.exports = userController
+module.exports = UserController

@@ -29,7 +29,7 @@ KONFIGURASI POSTGRES MENGGUNAKAN SEQUELIZE
 3. npx sequelize-cli db:create
 - untuk membuat database lewat sequelize tanpa query manual
 
-4. npx sequelize-cli model:generate --name User --attributes username:string,email:string,password:string
+4. npx sequelize-cli model:generate --name User --attributes username:string,password:string
 
 - untuk membuat class dan juga migrations
 
