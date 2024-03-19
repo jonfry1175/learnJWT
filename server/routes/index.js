@@ -1,10 +1,10 @@
 const route = require('express').Router()
 
 route.get('/', (req, res) => {
-    res.send("route index index")
+    res.send("route index")
 })
 
 const userRoute = require('./users')
-route.use(userRoute)
+route.use("/users", userRoute)
 
 module.exports = route
