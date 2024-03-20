@@ -1,5 +1,9 @@
 const { User } = require('../models')
 
+const {hash} = require('bcrypt')
+
+
+const saltRounds = 5
 
 
 class UserController {
@@ -17,11 +21,12 @@ class UserController {
     static async register(req, res) {
         try {
             const {username, password} = req.body
+            const hashPassword = await hash(password, saltRounds)
             const result = await User.create({
-                username, password
+                username, password : hashPassword
             })
-
             res.status(201).json(result)
+            console.log(`password hash : ${result.password}`)
         } catch (error) {
             res.status(500).json(error.message)
         }
