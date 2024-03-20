@@ -1,4 +1,7 @@
-## LEARN JWT
+# LEARN JWT
 
-# Install dependencies server
-- go to server/README.md to install server dependencies
+## SetUp server
+- go to /server/README.md to see how to setup the server
+
+added a specific response when login fails
+

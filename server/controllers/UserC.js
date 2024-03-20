@@ -41,7 +41,7 @@ class UserController {
     
             // Check if user exists
             if (!user) {
-                return res.status(401).json({ message: `Incorrect email or password` });
+                return res.status(401).json({ message: `Incorrect username !` });
             }
     
             // Check if password is valid
@@ -50,7 +50,7 @@ class UserController {
             if (isPasswordValid) {
                 res.status(200).json({ message: `Login successful!` });
             } else {
-                res.status(401).json({ message: `Incorrect email or password` });
+                res.status(401).json({ message: `Incorrect password!` });
             }
         } catch (error) {
             res.status(500).json(error.message);
