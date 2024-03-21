@@ -1,0 +1,2 @@
+validasi data
+move function bcrypt from controller to helpers

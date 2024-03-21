@@ -1,9 +1,7 @@
 const { User } = require('../models')
 
-const { hash, compare } = require('bcrypt')
+const { encryptPassword, decryptPassword } = require('../helpers')
 
-
-const saltRounds = 5
 
 
 class UserController {
@@ -21,11 +19,10 @@ class UserController {
     static async register(req, res) {
         try {
             const { username, password } = req.body
-            const hashPassword = await hash(password, saltRounds)
+            const hashPassword = await encryptPassword(password)
             const result = await User.create({
                 username, password: hashPassword
             })
-            // console.log(`password hash : ${result.password}`)
             res.status(201).json(result)
         } catch (error) {
             res.status(500).json(error.message)
@@ -35,28 +32,29 @@ class UserController {
     static async login(req, res) {
         try {
             const { username, password } = req.body;
-    
+
             // Get user data by username
             const user = await User.findOne({ where: { username } });
-    
+
             // Check if user exists
             if (!user) {
                 return res.status(401).json({ message: `Incorrect username !` });
             }
-    
+
             // Check if password is valid
-            const isPasswordValid = await compare(password, user.password);
-            
-            if (isPasswordValid) {
-                res.status(200).json({ message: `Login successful!` });
-            } else {
-                res.status(401).json({ message: `Incorrect password!` });
-            }
+            const isPasswordValid = await decryptPassword(password, user.password);
+
+            isPasswordValid ? res.status(200).json({
+                message: `Login Succesfully!`
+            }) : res.status(401).json({
+                message: `Incorrect Password!`
+            })
+
         } catch (error) {
             res.status(500).json(error.message);
         }
     }
-    
+
 }
 
 module.exports = UserController
