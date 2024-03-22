@@ -12,5 +12,5 @@ const route = require('./routes')
 app.use("/api", route)
 
 app.listen(port, () => {
-    console.log(`API is running on port ${port}`)
+    console.log(`Server is running on port ${port}`)
 })

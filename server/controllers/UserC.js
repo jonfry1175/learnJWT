@@ -3,7 +3,6 @@ const { User } = require('../models')
 const { encryptPassword, decryptPassword } = require('../helpers')
 
 
-
 class UserController {
     static async getUser(req, res) {
         try {

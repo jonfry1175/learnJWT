@@ -1,2 +1,2 @@
 validasi data
-move function bcrypt from controller to helpers
+move function bcrypt from controller to helpers => done

@@ -2,7 +2,8 @@ const { hash, compare } = require('bcrypt')
 require('dotenv').config();
 
 
-const saltRounds = process.env.SALTROUNDS || 15
+// const saltRounds = process.env.SALTROUNDS || 15
+const saltRounds = 15
 
 const encryptPassword = async (data) => {
     const result = await hash(data, saltRounds)
