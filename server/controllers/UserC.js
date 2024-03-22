@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Role } = require('../models')
 
 const { encryptPassword, decryptPassword } = require('../helpers')
 
@@ -6,7 +6,10 @@ const { encryptPassword, decryptPassword } = require('../helpers')
 class UserController {
     static async getUser(req, res) {
         try {
-            const result = await User.findAll()
+            const result = await User.findAll({
+                include: [Role],
+                order : [['id', 'ASC']]
+            })
             res.status(200).json(result)
 
         } catch (error) {
@@ -20,7 +23,7 @@ class UserController {
             const { username, password } = req.body
             const hashPassword = await encryptPassword(password)
             const result = await User.create({
-                username, password: hashPassword
+                username, password: hashPassword, roleId : 1
             })
             res.status(201).json(result)
         } catch (error) {
@@ -53,6 +56,8 @@ class UserController {
             res.status(500).json(error.message);
         }
     }
+
+   
 
 }
 

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsTo(models.Role, { foreignKey: 'roleId' })
     }
   }
   User.init({
@@ -50,7 +51,12 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Password must be less than 10 characters'
         }
       }
-    }
+    },
+
+    roleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      }
   }, {
     sequelize,
     modelName: 'User',
