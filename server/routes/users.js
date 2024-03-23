@@ -1,7 +1,12 @@
 const userRoute = require('express').Router()
-const {UserController} = require('../controllers')
+const { UserController } = require('../controllers')
+const authentication = require('../middlewares/auth')
 
-userRoute.get('/', UserController.getUser)
+
+
+userRoute.get('/',
+    authentication,
+    UserController.getUser)
 userRoute.post('/register', UserController.register)
 userRoute.post('/login', UserController.login)
 

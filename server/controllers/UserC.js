@@ -45,18 +45,18 @@ class UserController {
             }
 
             //generate token
-            // const accesToken = tokenGenerator({ usernameFound })
-            const accesToken = tokenGenerator(usernameFound.id, usernameFound.username, usernameFound.roleId);
+            // const access_token = tokenGenerator({ usernameFound })
+            const access_token = tokenGenerator(usernameFound.id, usernameFound.username, usernameFound.roleId);
 
 
-            const verifyToken = tokenVerifier(accesToken)
+            const verifyToken = tokenVerifier(access_token)
             // console.log(verifyToken)
 
             // Check if password is valid
             const isPasswordValid = await decryptPassword(password, usernameFound.password);
 
             // true = return token to client
-            isPasswordValid ? res.status(200).json({ accesToken }) : res.status(401).json({
+            isPasswordValid ? res.status(200).json({ access_token }) : res.status(401).json({
                 message: `Incorrect Password!`
             })
 
