@@ -1,2 +1,4 @@
-validasi data
-move function bcrypt from controller to helpers => done
+helpers/jwt.js
+middleware
+
+menit 59:29
