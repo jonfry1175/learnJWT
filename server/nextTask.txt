@@ -1,4 +1,5 @@
-helpers/jwt.js
-middleware
+helpers/jwt.js [done]
+middleware [done]
+implementasi reactjs
 
 menit 59:29
