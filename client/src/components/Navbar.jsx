@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LoginButton from "./LoginButton";
 
 const Navbar = () => {
   return (
@@ -24,12 +23,12 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <to className="nav-link active" aria-current="page" to="#">
+                <Link className="nav-link active" aria-current="page" to="/home">
                   Home
-                </to>
+                </Link>
               </li>
-              <button>
-                <LoginButton></LoginButton>
+              <button to='/home'>
+                Login
               </button>
             </ul>
           </div>

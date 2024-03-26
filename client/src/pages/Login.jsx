@@ -1,7 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useState, useEffect} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 const Login = () => {
+
+  const url = "http://localhost:3012"
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const loginUser = async () => {
+    try {
+      const response = await axios({
+        method: "POST",
+        url: `${url}/api/users/login`,
+        data: {
+          username,
+          password
+        }
+      })
+      const access_token = response.data.access_token
+      localStorage.setItem("access_token", access_token)
+
+      console.log(access_token)
+      navigate("/home")
+
+    } catch (error) {
+      // alert(error.response.data.message)
+      console.error(error.data)
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser()
+  }
+
   return (
     <div className="px-5 py-5 p-lg-0">
       <div className="d-flex justify-content-center">
@@ -20,7 +56,7 @@ const Login = () => {
                   <label className="form-label" htmlFor="username">
                     Username
                   </label>
-                  <input
+                  <input onChange={(e) => setUsername(e.target.value )}
                     type="text"
                     className="form-control"
                     id="username"
@@ -31,7 +67,7 @@ const Login = () => {
                   <label className="form-label" htmlFor="password">
                     Password
                   </label>
-                  <input
+                  <input onChange={(e) => setPassword(e.target.value )}
                     type="password"
                     className="form-control"
                     id="password"
@@ -40,7 +76,7 @@ const Login = () => {
                   />
                 </div>
                 <div>
-                  <button type="submit" className="btn btn-primary w-full">
+                  <button onClick={handleSubmit} type="submit" className="btn btn-primary w-full">
                     Log in
                   </button>
                 </div>
