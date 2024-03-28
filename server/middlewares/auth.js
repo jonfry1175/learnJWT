@@ -17,7 +17,7 @@ const authentication = async (req, res, next) => {
             return res.status(401).json({ message: "Unauthorized" })
         }
     } catch (error) {
-        res.status(401).json(error.message)
+        res.status(401).json("invalid token")
     }
 }
 

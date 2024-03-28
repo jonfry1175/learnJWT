@@ -9,37 +9,33 @@ const Home = () => {
 
   const getUsers = async () => {
     try {
-      const tokenStorage = localStorage.access_token
+      const tokenStorage = localStorage.access_token;
       const response = await axios({
         method: "GET",
         url: `${url}/api/users`,
         headers: {
-          access_token: tokenStorage
-        }
+          access_token: tokenStorage,
+        },
       });
-      // setUsers(response.data)
-      console.log(response.data);
-
+      setUsers(response.data);
+      // console.log(response.data);
     } catch (error) {
-      console.log(error.response.data.message);
-      console.log(localStorage.access_token)
+      console.log(error.response.data);
+      console.log(localStorage.access_token);
     }
   };
 
   const handleLogout = () => {
-    
-    localStorage.removeItem("access_token")
-    navigate("/login")
-}
-
-
+    localStorage.removeItem("access_token");
+    navigate("/login");
+  };
 
   useEffect(() => {
-    const access_token = localStorage.getItem("access_token")
-    if(!access_token) {
-      navigate("/login")
+    const access_token = localStorage.getItem("access_token");
+    if (!access_token) {
+      navigate("/login");
     } else {
-      getUsers()
+      getUsers();
     }
   }, []);
 
@@ -49,16 +45,13 @@ const Home = () => {
       <button onClick={getUsers}>Get User</button>
       <button onClick={handleLogout}>Logout</button>
       <ul>
-        id
-        <li>test</li>
-      </ul>
-      <ul>
-        username
-        <li>test</li>
-      </ul>
-      <ul>
-        roleId
-        <li>test</li>
+        {users.map((user) => (
+          <li key={user.id}>
+            <div>ID: {user.id}</div> 
+            <div>Username: {user.username}</div>
+            <div>Role: {user.Role.name}</div>
+          </li>
+        ))}
       </ul>
     </div>
   );

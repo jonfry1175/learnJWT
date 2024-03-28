@@ -24,12 +24,19 @@ const Login = () => {
       const access_token = response.data.access_token
       localStorage.setItem("access_token", access_token)
 
-      console.log(access_token)
+      // console.log(response)
+      alert("login succes!")
+      // console.log(access_token)
       navigate("/home")
 
     } catch (error) {
+      if(error.response.data.message === 'Incorrect username !') {
+        alert("Username tidak terdaftar")
+      } else if(error.response.data.message === 'Incorrect Password!') {
+        alert("Password salah")
+      }
       // alert(error.response.data.message)
-      console.error(error.data)
+      // console.error(error.response.data)
     }
   }
 
@@ -68,7 +75,7 @@ const Login = () => {
                     Password
                   </label>
                   <input onChange={(e) => setPassword(e.target.value )}
-                    type="password"
+                    type="text"
                     className="form-control"
                     id="password"
                     placeholder="Password"

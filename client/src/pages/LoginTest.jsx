@@ -1,41 +1,42 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React,{useState, useEffect} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const Register = () => {
-  const [username, setUsername] = useState("");
+
+const Login = () => {
+
+  const url = "http://localhost:3012"
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
-    const url = "http://localhost:3012";
-
-    // e.preventDefault();
-    e.preventDefault(); 
-
+  const loginUser = async () => {
     try {
-      const result = await axios({
+      const response = await axios({
         method: "POST",
-        url: `${url}/api/users/register`,
+        url: `${url}/users/login`,
         data: {
-          username,
-          password,
-        },
-      });
-      console.log(result);
-      alert("Register Succes")
-      navigate('/login')
+          email,
+          password
+        }
+      })
+      const access_token = response.data
+      localStorage.setItem("access_token", access_token)
+
+      console.log(response.data)
+      navigate("/home")
+
     } catch (error) {
       // alert(error.response.data.message)
-      
-      if(error.response.data === 'Username already exists') {
-        alert("Username telah terdaftar")
-      }
-      // console.log(error.response);
-      console.log(error.response);
+      console.error(error.data)
     }
-  };
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser()
+  }
 
   return (
     <div className="px-5 py-5 p-lg-0">
@@ -52,39 +53,31 @@ const Register = () => {
               </div>
               <form>
                 <div className="mb-5">
-                  <label className="form-label" htmlFor="username">
-                    Username
+                  <label className="form-label" htmlFor="email">
+                    email
                   </label>
-                  <input
+                  <input onChange={(e) => setEmail(e.target.value )}
                     type="text"
                     className="form-control"
-                    id="username"
-                    placeholder="Your username address"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    id="email"
+                    placeholder="Your email address"
                   />
                 </div>
                 <div className="mb-5">
                   <label className="form-label" htmlFor="password">
                     Password
                   </label>
-                  <input
+                  <input onChange={(e) => setPassword(e.target.value )}
                     type="text"
                     className="form-control"
                     id="password"
                     placeholder="Password"
                     autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div>
-                  <button
-                    onClick={handleRegister}
-                    type="submit"
-                    className="btn btn-primary w-full"
-                  >
-                    Register
+                  <button onClick={handleSubmit} type="submit" className="btn btn-primary w-full">
+                    Log in
                   </button>
                 </div>
               </form>
@@ -92,12 +85,12 @@ const Register = () => {
                 <div className="col-sm-6"></div>
               </div>
               <div className="my-6">
-                <small>already have an account?</small>
+                <small>Don't have an account?</small>
                 <Link
-                  to="/login"
+                  to="/register"
                   className="text-warning text-sm font-semibold"
                 >
-                  Login
+                  Register
                 </Link>
               </div>
             </div>
@@ -108,4 +101,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
